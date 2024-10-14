@@ -53,6 +53,8 @@
       pwngrid = pkgs.pwngrid;
       pwnagotchi = pkgs.pwnagotchi;
 
+      lgpio = pkgs.lgpio;
+
     });
 
   };

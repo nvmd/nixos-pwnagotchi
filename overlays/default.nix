@@ -1,4 +1,28 @@
 self: super: { # final: prev:
+
+  pythonPackagesOverlays = (super.pythonPackagesOverlays or [ ]) ++ [
+    (python-self: python-super: {
+      gpiodevice = python-self.callPackage ../pkgs/gpiodevice.nix {};
+      inky = python-self.callPackage ../pkgs/inky.nix {};
+      lgpio = python-self.callPackage ../pkgs/lgpio.nix {};
+      rpi_lgpio = python-self.callPackage ../pkgs/rpi-lgpio.nix {};
+      rpi_hardware_pwm = python-self.callPackage ../pkgs/rpi_hardware_pwm.nix {};
+      stable_baselines3 = python-self.callPackage ../pkgs/stable_baselines3.nix {};
+    })
+  ];
+
+  python3 = let
+    mypython = super.python3.override {
+      # enableOptimizations = true;
+      # reproducibleBuild = false;
+      self = mypython;
+      packageOverrides = super.lib.composeManyExtensions self.pythonPackagesOverlays;
+    };
+  in mypython;
+
+  python3Packages = self.python3.pkgs;
+
+
   # https://github.com/jayofelony/pwnagotchi/blob/master/builder/raspberrypi64.yml
   # https://raw.githubusercontent.com/jayofelony/pwnagotchi/refs/heads/master/builder/raspberrypi64.yml
 

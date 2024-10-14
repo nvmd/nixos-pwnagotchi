@@ -21,7 +21,7 @@ python3Packages.buildPythonApplication rec {
   dependencies = with python3Packages; [
     pillow # Pillow
     pyyaml # PyYAML
-    # rpi.lgpio # https://pypi.org/project/rpi-lgpio/
+    rpi_lgpio # rpi.lgpio # https://pypi.org/project/rpi-lgpio/
     dbus-python
     file-read-backwards
     flask
@@ -29,17 +29,17 @@ python3Packages.buildPythonApplication rec {
     flask-wtf
     gast
     gpiozero
-    # inky  # https://pypi.org/project/inky/
+    inky  # https://pypi.org/project/inky/
     pycryptodome
     pydrive2
     python-dateutil
     requests
-    # rpi_hardware_pwm  # https://pypi.org/project/rpi-hardware-pwm/
+    rpi_hardware_pwm  # https://pypi.org/project/rpi-hardware-pwm/
     scapy
     shimmy
     smbus2
     spidev
-    # stable_baselines3 # https://pypi.org/project/stable-baselines3/
+    stable_baselines3 # https://pypi.org/project/stable-baselines3/
     toml
     torch
     torchvision
