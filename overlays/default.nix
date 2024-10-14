@@ -22,38 +22,21 @@ self: super: { # final: prev:
     #     target: install
     #   when: capletsgit.changed
 
-  ### https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/tools/security/bettercap/default.nix#L31
-  #     bettercap:
-  #       source: "https://github.com/jayofelony/bettercap.git"
-  #       url: "https://github.com/jayofelony/bettercap/releases/download/2.32.4/bettercap-2.32.4.zip"
-  #       branch: "lite" # or master
-  # - name: download bettercap
-  #   git:
-  #     repo: "{{ packages.bettercap.source }}"
-  #     version: "{{ packages.bettercap.branch }}"
-  #     dest: /usr/local/src/bettercap
 
-  # - name: install bettercap 2.32.4
-  #   shell: "export GOPATH=$HOME/go && export PATH=/usr/local/go/bin:$PATH:$GOPATH/bin && go mod tidy && make && make install"
-  #   args:
-  #     executable: /bin/bash
-  #     chdir: /usr/local/src/bettercap
+  # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/tools/security/bettercap/default.nix#L31
+  bettercap = super.bettercap.overrideAttrs (old: let
+    version = "2.32.4";
+  in {
+    version = version + "-pwn";
+    src = super.fetchFromGitHub { # https://github.com/jayofelony/bettercap.git
+      owner = "jayofelony";
+      repo = old.pname;
+      rev = "v${version}";  # or follow `branch: "lite" # or master`?
+      sha256 = "sha256-bup6f0VljnqZkYBzDUzN9Xm0OA3b7/+bd383HT6vT7M=";
+    };
 
-  # - name: remove bettercap folder
-  #   file:
-  #     state: absent
-  #     path: /usr/local/src/bettercap
-
-  # #- name: download and install bettercap
-  # #  unarchive:
-  # #    src: "{{ packages.bettercap.url }}"
-  # #    dest: /usr/local/bin
-  # #    remote_src: yes
-  # #    exclude:
-  # #      - README.md
-  # #      - LICENSE.md
-  # #    mode: 0755
-
+    vendorHash = "sha256-M6tgjYE5xF5uykCVyg7F6xKTvF0hdfJYic+xej98mpM=";
+  });
 
 
   pwngrid = super.callPackage ../pkgs/pwngrid.nix {};

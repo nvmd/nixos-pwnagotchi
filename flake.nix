@@ -46,9 +46,10 @@
     };
 
     packages = forSystems allSystems (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs { inherit system; overlays = [self.overlays.default]; };
     in {
 
+      bettercap = pkgs.bettercap;
       pwngrid = pkgs.callPackage ./pkgs/pwngrid.nix {};
 
     });
