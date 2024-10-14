@@ -34,7 +34,7 @@ buildGoModule rec {
   pname = "pwngrid";
   version = "1.11.1";
 
-  src = fetchFromGitHub {
+  src = fetchFromGitHub { # https://github.com/jayofelony/pwngrid.git
     owner = "jayofelony";
     repo = "pwngrid";
     rev = "v${version}";
