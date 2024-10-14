@@ -1,5 +1,5 @@
 {
-  description = "Flake for RaspberryPi support on NixOS";
+  description = "Declarative pwnagotchi built with NixOS";
 
   nixConfig = {
     extra-substituters = [
