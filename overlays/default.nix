@@ -80,26 +80,25 @@ self: super: { # final: prev:
   #       state: directory
   
 
-
-  ### https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/development/libraries/libpcap/default.nix#L65
+  # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/development/libraries/libpcap/default.nix#L65
+  libpcap = super.libpcap.overrideAttrs (old: rec {
+    version = "1.9.1";
+    src = super.fetchurl {
+      url = "https://www.tcpdump.org/release/${old.pname}-${version}.tar.gz";
+      hash = "sha256-Y1I3Y3xbYZvM66kZAGZrZNVuy3vmPymPYB7Hhs4IcJQ=";
+    };
+  });
   # install libpcap before bettercap and pwngrid, so they use it
   # - name: clone libpcap v1.9 from github
   #   git:
   #     repo: 'https://github.com/the-tcpdump-group/libpcap.git'
   #     dest: /usr/local/src/libpcap
   #     version: libpcap-1.9
-
   # - name: build and install libpcap into /usr/local/lib
   #   shell: "./configure && make && make install"
   #   args:
   #     executable: /bin/bash
   #     chdir: /usr/local/src/libpcap
-
-  # - name: remove libpcap build folder
-  #   file:
-  #     state: absent
-  #     path: /usr/local/src/libpcap
-
   # - name: create symlink /usr/local/lib/libpcap.so.1.9.1
   #   file:
   #     src: /usr/local/lib/libpcap.so.1.9.1

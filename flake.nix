@@ -50,7 +50,7 @@
     in {
 
       bettercap = pkgs.bettercap;
-      pwngrid = pkgs.callPackage ./pkgs/pwngrid.nix {};
+      pwngrid = pkgs.pwngrid;
 
     });
 
