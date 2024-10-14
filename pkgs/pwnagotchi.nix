@@ -4,6 +4,8 @@ python3Packages.buildPythonApplication rec {
   pname = "pwnagotchi";
   version = "2.8.9";
 
+  disabled = python3Packages.pythonOlder "3.10";
+
   # https://github.com/jayofelony/pwnagotchi/blob/master/pyproject.toml
   pyproject = true;
 

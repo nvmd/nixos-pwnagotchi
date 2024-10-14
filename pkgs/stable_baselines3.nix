@@ -1,8 +1,10 @@
-{ lib, python3Packages, fetchPypi }:
+{ lib, python3Packages, pythonOlder, fetchPypi }:
 
 python3Packages.buildPythonPackage rec {
   pname = "stable_baselines3";
   version = "2.3.2";
+
+  disabled = pythonOlder "3.8";
 
   pyproject = true;
 

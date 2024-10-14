@@ -1,8 +1,10 @@
-{ lib, python3Packages, fetchPypi }:
+{ lib, python3Packages, pythonOlder, fetchPypi }:
 
 python3Packages.buildPythonPackage rec {
   pname = "gpiodevice";
   version = "0.0.5";
+
+  disabled = pythonOlder "3.7";
 
   pyproject = true;
 

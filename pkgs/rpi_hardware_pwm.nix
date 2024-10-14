@@ -1,5 +1,6 @@
 { lib
 , buildPythonPackage
+, pythonOlder
 , fetchFromGitHub
 , setuptools
 , pytestCheckHook
@@ -9,6 +10,8 @@
 buildPythonPackage rec {
   pname = "rpi_hardware_pwm";
   version = "0.2.2";
+
+  disabled = pythonOlder "3.5";
 
   pyproject = true;
 

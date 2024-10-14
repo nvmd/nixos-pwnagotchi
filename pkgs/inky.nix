@@ -1,8 +1,10 @@
-{ lib, python3Packages, fetchPypi }:
+{ lib, python3Packages, pythonOlder, fetchPypi }:
 
 python3Packages.buildPythonPackage rec {
   pname = "inky";
   version = "2.0.0";
+
+  disabled = pythonOlder "3.7";
 
   pyproject = true;
 

@@ -1,8 +1,10 @@
-{ lib, python3Packages, fetchPypi }:
+{ lib, python3Packages, pythonOlder, fetchPypi }:
 
 python3Packages.buildPythonPackage rec {
   pname = "rpi_lgpio";
   version = "0.6";
+
+  disabled = pythonOlder "3.7";
 
   pyproject = true;
 
