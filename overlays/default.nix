@@ -8,6 +8,15 @@ self: super: { # final: prev:
       rpi_lgpio = python-self.callPackage ../pkgs/rpi-lgpio.nix {};
       rpi_hardware_pwm = python-self.callPackage ../pkgs/rpi_hardware_pwm.nix {};
       stable_baselines3 = python-self.callPackage ../pkgs/stable_baselines3.nix {};
+
+      rlcard = python-super.rlcard.overridePythonAttrs (oldAttrs: {
+        # https://github.com/datamllab/rlcard/pull/323
+        patchPhase = ''
+          substituteInPlace rlcard/agents/__init__.py \
+            --replace "from distutils.version import LooseVersion" " "
+        '';
+        meta.broken = false;
+      });
     })
   ];
 
