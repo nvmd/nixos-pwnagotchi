@@ -50,7 +50,7 @@ buildGoModule rec {
   meta = with lib; {
     description = "PwnGRID, (⌐■_■) - API server for pwnagotchi.ai";
     homepage = "https://github.com/jayofelony/pwngrid";
-    license = licenses.mit;
+    license = licenses.gpl3Only;
     maintainers = with maintainers; [ kazenyuk ];
   };
 }
