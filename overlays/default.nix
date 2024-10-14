@@ -1,6 +1,6 @@
 self: super: { # final: prev:
 
-  pythonPackagesOverlays = (super.pythonPackagesOverlays or [ ]) ++ [
+  pythonPackagesExtensions = super.pythonPackagesExtensions ++ [
     (python-self: python-super: {
       gpiodevice = python-self.callPackage ../pkgs/gpiodevice.nix {};
       inky = python-self.callPackage ../pkgs/inky.nix {};
@@ -16,11 +16,8 @@ self: super: { # final: prev:
       # enableOptimizations = true;
       # reproducibleBuild = false;
       self = mypython;
-      packageOverrides = super.lib.composeManyExtensions self.pythonPackagesOverlays;
     };
   in mypython;
-
-  python3Packages = self.python3.pkgs;
 
 
   # https://github.com/jayofelony/pwnagotchi/blob/master/builder/raspberrypi64.yml
