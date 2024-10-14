@@ -40,7 +40,7 @@ self: super: { # final: prev:
 
   pwngrid = super.callPackage ../pkgs/pwngrid.nix {};
 
-
+  pwnagotchi = super.callPackage ../pkgs/pwnagotchi.nix {};
 
   ### https://github.com/jayofelony/pwnagotchi/tree/master/pwnagotchi
   # pwnagotchi

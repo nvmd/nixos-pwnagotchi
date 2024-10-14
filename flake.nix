@@ -51,6 +51,7 @@
 
       bettercap = pkgs.bettercap;
       pwngrid = pkgs.pwngrid;
+      pwnagotchi = pkgs.pwnagotchi;
 
     });
 
