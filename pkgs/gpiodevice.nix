@@ -8,16 +8,23 @@ python3Packages.buildPythonPackage rec {
 
   pyproject = true;
 
-  src = fetchPypi {
+  src = fetchPypi { # https://pypi.org/project/gpiodevice/
     inherit pname version;
-    hash  = "sha256-Yugm/Lc8lXggnHiNz1hXZE894scHQ/+5H3/oaRI+KJ0=";
+    hash  = "sha256-zKAf9DGeC6kG/0bcuBE9jVMrP17gPWg9ihEDfI6JFAw=";
   };
 
   build-system = with python3Packages; [
     hatchling
+    hatch-fancy-pypi-readme
   ];
 
   dependencies = with python3Packages; [
     libgpiod  # https://pypi.org/project/gpiod
   ];
+
+  meta = with lib; {
+    homepage = "https://github.com/pimoroni/gpiodevice-python";
+    license = licenses.mit;
+    maintainers = with maintainers; [ kazenyuk ];
+  };
 }
