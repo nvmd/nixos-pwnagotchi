@@ -24,10 +24,9 @@ self: super: { # final: prev:
 
 
   # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/tools/security/bettercap/default.nix#L31
-  bettercap = super.bettercap.overrideAttrs (old: let
+  bettercap = super.bettercap.overrideAttrs (old: rec {
+    pname = old.pname + "-pwn";
     version = "2.32.4";
-  in {
-    version = version + "-pwn";
     src = super.fetchFromGitHub { # https://github.com/jayofelony/bettercap.git
       owner = "jayofelony";
       repo = old.pname;
