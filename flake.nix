@@ -50,6 +50,8 @@
     in {
 
       bettercap = pkgs.bettercap;
+      libpcap = pkgs.libpcap;
+
       pwngrid = pkgs.pwngrid;
       pwnagotchi = pkgs.pwnagotchi;
 
