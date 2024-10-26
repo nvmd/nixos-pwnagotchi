@@ -47,6 +47,10 @@ python3Packages.buildPythonApplication rec {
     torchvision
     tweepy
     websockets
+
+    # pythonRuntimeDepsCheck
+    gym
+    rpi-gpio
   ];
 
   meta = with lib; {

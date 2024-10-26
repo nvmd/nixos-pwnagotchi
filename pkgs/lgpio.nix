@@ -2,6 +2,8 @@
 , stdenv
 , fetchurl
 , unzip
+# for passthru.tests
+, python3
 }:
 
 stdenv.mkDerivation {
@@ -21,6 +23,10 @@ stdenv.mkDerivation {
   ];
 
   enableParallelBuilding = true;
+
+  passthru.tests = {
+    inherit (python3.pkgs) lgpio;
+  };
 
   meta = with lib; {
     homepage = "https://abyz.me.uk/lg/index.html";

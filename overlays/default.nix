@@ -5,7 +5,7 @@ self: super: { # final: prev:
       gpiodevice = python-self.callPackage ../pkgs/gpiodevice.nix {};
       inky = python-self.callPackage ../pkgs/inky.nix {};
       lgpio = python-self.callPackage ../pkgs/py-lgpio.nix {
-        pkgsLigpio = self.lgpio; # Needs the C library
+        pkgsLibgpio = self.lgpio; # Needs the C library
       };
       rpi_lgpio = python-self.callPackage ../pkgs/rpi-lgpio.nix {};
       rpi_hardware_pwm = python-self.callPackage ../pkgs/rpi_hardware_pwm.nix {};

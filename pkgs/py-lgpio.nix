@@ -2,7 +2,7 @@
 , python3Packages
 , fetchPypi
 , swig
-, pkgsLigpio
+, pkgsLibgpio
 }:
 
 python3Packages.buildPythonPackage rec {
@@ -20,10 +20,10 @@ python3Packages.buildPythonPackage rec {
   ];
 
   nativeBuildInputs = [ swig ];
-  buildInputs = [ pkgsLigpio ];
+  buildInputs = [ pkgsLibgpio ];
 
   propagatedBuildInputs = [
-    pkgsLigpio
+    pkgsLibgpio
   ];
 
   meta = with lib; {
