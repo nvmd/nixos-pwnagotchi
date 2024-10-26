@@ -1,4 +1,12 @@
-{ lib, python3Packages, pythonOlder, fetchPypi }:
+{ lib
+, python3Packages
+, pythonOlder
+, fetchPypi
+, pytestCheckHook
+# test dependencies
+, tqdm
+, rich 
+}:
 
 python3Packages.buildPythonPackage rec {
   pname = "stable_baselines3";
@@ -24,5 +32,19 @@ python3Packages.buildPythonPackage rec {
     cloudpickle
     pandas
     matplotlib
+  ];
+
+  nativeCheckInputs = [
+    pytestCheckHook
+    tqdm
+    rich
+  ];
+
+  disabledTestPaths = [
+    # test_load_invalid_object needs to write to filesystem
+    # Failed: DID NOT WARN. No warnings of type (<class 'UserWarning'>,) were emitted.
+    "tests/test_save_load.py"
+    # depends on atari rom files (AutoROM.accept-rom-license)
+    "tests/test_utils.py"
   ];
 }
