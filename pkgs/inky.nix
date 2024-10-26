@@ -15,6 +15,8 @@ python3Packages.buildPythonPackage rec {
 
   build-system = with python3Packages; [
     hatchling
+    hatch-fancy-pypi-readme
+    hatch-requirements-txt
   ];
 
   dependencies = with python3Packages; [
