@@ -1,4 +1,10 @@
-{ lib, python3Packages, pythonOlder, fetchPypi }:
+{ lib
+, python3Packages
+, pythonOlder
+, fetchPypi
+, pytestCheckHook
+, mock
+}:
 
 python3Packages.buildPythonPackage rec {
   pname = "gpiodevice";
@@ -20,6 +26,11 @@ python3Packages.buildPythonPackage rec {
 
   dependencies = with python3Packages; [
     libgpiod  # https://pypi.org/project/gpiod
+  ];
+
+  nativeCheckInputs = [
+    pytestCheckHook
+    mock
   ];
 
   meta = with lib; {
