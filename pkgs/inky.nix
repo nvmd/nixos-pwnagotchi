@@ -1,4 +1,4 @@
-{ lib, python3Packages, pythonOlder, fetchPypi }:
+{ lib, python3Packages, pythonOlder, fetchPypi, pytestCheckHook }:
 
 python3Packages.buildPythonPackage rec {
   pname = "inky";
@@ -25,5 +25,9 @@ python3Packages.buildPythonPackage rec {
     smbus2
     spidev
     gpiodevice  # >=0.0.3 https://pypi.org/project/gpiodevice/
+  ];
+
+  nativeCheckInputs = [
+    pytestCheckHook
   ];
 }
