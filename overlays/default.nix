@@ -4,7 +4,9 @@ self: super: { # final: prev:
     (python-self: python-super: {
       gpiodevice = python-self.callPackage ../pkgs/gpiodevice.nix {};
       inky = python-self.callPackage ../pkgs/inky.nix {};
-      lgpio = python-self.callPackage ../pkgs/lgpio.nix {};
+      lgpio = python-self.callPackage ../pkgs/py-lgpio.nix {
+        pkgsLigpio = self.lgpio; # Needs the C library
+      };
       rpi_lgpio = python-self.callPackage ../pkgs/rpi-lgpio.nix {};
       rpi_hardware_pwm = python-self.callPackage ../pkgs/rpi_hardware_pwm.nix {};
       stable_baselines3 = python-self.callPackage ../pkgs/stable_baselines3.nix {};
@@ -110,13 +112,31 @@ self: super: { # final: prev:
   
 
   # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/development/libraries/libpcap/default.nix#L65
-  libpcap = super.libpcap.overrideAttrs (old: rec {
-    version = "1.9.1";
-    src = super.fetchurl {
-      url = "https://www.tcpdump.org/release/${old.pname}-${version}.tar.gz";
-      hash = "sha256-Y1I3Y3xbYZvM66kZAGZrZNVuy3vmPymPYB7Hhs4IcJQ=";
-    };
-  });
+  # libpcap = super.libpcap.overrideAttrs (old: rec {
+  #   version = "1.9.1";
+  #   src = super.fetchurl {
+  #     url = "https://www.tcpdump.org/release/${old.pname}-${version}.tar.gz";
+  #     hash = "sha256-Y1I3Y3xbYZvM66kZAGZrZNVuy3vmPymPYB7Hhs4IcJQ=";
+  #   };
+  #   # preBuild = ''
+  #   #   makeFlagsArray+=(
+  #   #     INCLUDE=$(pkg-config --cflags libnl-genl-3.0)
+  #   #   )
+  #   # '';
+  #   patchPhase = ''
+  #     substituteInPlace CMakeLists.txt \
+  #       --replace "include_directories("/usr/include/libnl3")" \
+  #                 "kdfjkdjf"
+  #   '';
+  #   buildInputs = old.buildInputs
+  #     ++ super.lib.optionals super.stdenv.hostPlatform.isLinux [
+  #       # self.libnfnetlink
+  #       # self.libnetfilter_queue
+  #       self.libnl.dev
+  #       # self.libnftnl
+  #     ];
+  # });
+  # libpcap = super.callPackage ../pkgs/libpcap-1.9.1.nix {};
   # install libpcap before bettercap and pwngrid, so they use it
   # - name: clone libpcap v1.9 from github
   #   git:
@@ -134,8 +154,9 @@ self: super: { # final: prev:
   #     dest: /usr/local/lib/libpcap.so.0.8
   #     state: link
 
+  lgpio = super.callPackage ../pkgs/lgpio.nix {};
 
-
+  nexmon = super.callPackage ../pkgs/nexmon.nix {};
   # Installing nexmon
   # - name: clone nexmon repository
   #   git:
