@@ -57,6 +57,8 @@
 
       lgpio = pkgs.lgpio;
 
+      nexmon = pkgs.nexmon;
+
     });
 
   };
