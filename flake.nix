@@ -16,7 +16,7 @@
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi";
   };
 
-  outputs = { self, nixpkgs, ... }@inputs: let
+  outputs = { self, nixpkgs, nixos-raspberrypi, ... }@inputs: let
     # rpiSystems = [ "aarch64-linux" "armv7l-linux" "armv6l-linux" ];
     allSystems = nixpkgs.lib.systems.flakeExposed;
     forSystems = systems: f: nixpkgs.lib.genAttrs systems (system: f system);
@@ -46,7 +46,17 @@
     };
 
     packages = forSystems allSystems (system: let
-      pkgs = import nixpkgs { inherit system; overlays = [self.overlays.default]; };
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [
+          nixos-raspberrypi.overlays.vendor-firmware
+          nixos-raspberrypi.overlays.vendor-kernel
+
+          nixos-raspberrypi.overlays.kernel-and-firmware
+
+          self.overlays.default
+        ];
+      };
     in {
 
       bettercap = pkgs.bettercap;
@@ -58,6 +68,9 @@
       lgpio = pkgs.lgpio;
 
       nexmon = pkgs.nexmon;
+      nexmon-kmod = let
+        targetKernel = pkgs.linux_rpi4_v6_6_51;
+      in (pkgs.linuxPackagesFor targetKernel).callPackage ./pkgs/nexmon-kmod.nix {};
 
     });
 
