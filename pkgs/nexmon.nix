@@ -29,6 +29,10 @@ stdenv.mkDerivation (finalAttrs: {
     gmp
   ];
 
+  makeFlags = [
+    "GIT_VERSION=${builtins.substring 0 7 finalAttrs.src.rev}"
+  ];
+
   patchPhase = ''
     substituteInPlace setup_env.sh \
       --replace-quiet "export CC=arm-none-eabi-" "export CC="
@@ -37,9 +41,19 @@ stdenv.mkDerivation (finalAttrs: {
       buildtools/gcc-nexmon-plugin-arm/Makefile \
       --replace-quiet "arm-none-eabi-g++" "g++"
 
+    find . -type f -name 'Makefile' \
+      -exec sed -i 's#-mthumb# #' {} \;
+
     substituteInPlace \
       buildtools/b43/assembler/Makefile \
       --replace-warn "LDFLAGS		+= -ll" "LDFLAGS		+= -lfl"
+
+
+    # GIT_VERSION := $(shell git describe --abbrev=4 --dirty --always --tags)
+    # substituteInPlace Makefile.am \
+    #   --replace 'GIT_VERSION :=' 'GIT_VERSION ?='
+
+    find . -type f -exec sed -i 's#$(shell git describe --abbrev=4 --dirty --always --tags)#${builtins.substring 0 7 finalAttrs.src.rev}#' {} \;
 
     find . -type f -name 'Makefile' \
       -exec sed -i 's#/bin/true#${coreutils}/bin/true#' {} \;
@@ -49,8 +63,13 @@ stdenv.mkDerivation (finalAttrs: {
       -exec sed -i 's#\$(shell which bash)#${bash}/bin/bash#' {} \;
   '';
 
+  # postPatch = ''
+  #   patchShebangs .
+  #   substituteInPlace Makefile --replace 'SHELL=/bin/bash' 'SHELL=${builtins.getEnv "SHELL"}'
+  # '';
+
   buildPhase = ''
-    NEXMON_ROOT=$(pwd)
+    export NEXMON_ROOT=$(pwd)
 
     source setup_env.sh
     make V=1
