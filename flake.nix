@@ -97,7 +97,7 @@
           nixos-raspberrypi.lib.inject-overlays-global
           nixos-raspberrypi.lib.inject-overlays
         ] ++ (with nixos-raspberrypi.nixosModules; [
-          raspberry-pi-4.base
+          raspberry-pi-02.base
           sd-image
         ]);
       };
