@@ -65,13 +65,14 @@ self: super: { # final: prev:
 
   pwnagotchi = super.callPackage ../pkgs/pwnagotchi.nix {};
 
-  python3 = let
-    mypython = super.python3.override {
-      # enableOptimizations = true;
-      # reproducibleBuild = false;
-      self = mypython;
-    };
-  in mypython;
+  # python3Packages = self.python3.pkgs;
+  # python3 = let
+  #   mypython = self.python311.override {
+  #     # enableOptimizations = true;
+  #     # reproducibleBuild = false;
+  #     self = mypython;
+  #   };
+  # in mypython;
 
   pythonPackagesExtensions = super.pythonPackagesExtensions ++ [
     (python-self: python-super: {
