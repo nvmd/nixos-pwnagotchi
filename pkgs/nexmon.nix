@@ -79,12 +79,14 @@ stdenv.mkDerivation (finalAttrs: {
       # "bcm43430a1/7_45_41_46"
 
       # Raspberry Pi B3+/B4, Raspberry Pi OS Kernel 5.4
+      # PWN: RPi4, RPi5
       # "bcm43455c0/7_45_206"
 
       # Raspberry Pi B3+/B4/5, Raspberry Pi OS
       # "bcm43455c0/7_45_234_4ca95bb_CY"
 
       # Raspberry Pi Zero 2 W, Raspberry Pi OS Kernel 5.10
+      # PWN: RPi02, RPi3
       "bcm43436b0/9_88_4_65"
 
       # Raspberry Pi Pico W, Pico SDK
@@ -97,7 +99,7 @@ stdenv.mkDerivation (finalAttrs: {
       cd "$NEXMON_ROOT"/patches/"$fw"/nexmon
       make V=1
 
-      local target=$out/fw/"$fw"
+      local target=$out/firmware/brcm/"$fw"
       mkdir -p $target
       cp ./*.bin $target || true
       cp ./*.h $target || true
