@@ -2,9 +2,6 @@
 # build-system
 , setuptools
 # dependencies
-, pillow # Pillow
-, pyyaml # PyYAML
-, rpi_lgpio # rpi.lgpio # https://pypi.org/project/rpi-lgpio/
 , dbus-python
 , file-read-backwards
 , flask
@@ -13,11 +10,14 @@
 , gast
 , gpiozero
 , inky  # https://pypi.org/project/inky/
+, pillow # Pillow
 , pycryptodome
 , pydrive2
 , python-dateutil
+, pyyaml # PyYAML
 , requests
 , rpi_hardware_pwm  # https://pypi.org/project/rpi-hardware-pwm/
+, rpi_lgpio # rpi.lgpio # https://pypi.org/project/rpi-lgpio/
 , scapy
 , shimmy
 , smbus2
@@ -67,9 +67,6 @@ buildPythonApplication rec {
   ];
 
   dependencies = [
-    pillow # Pillow
-    pyyaml # PyYAML
-    rpi_lgpio # rpi.lgpio # https://pypi.org/project/rpi-lgpio/
     dbus-python
     file-read-backwards
     flask
@@ -78,11 +75,14 @@ buildPythonApplication rec {
     gast
     gpiozero
     inky  # https://pypi.org/project/inky/
+    pillow # Pillow
     pycryptodome
     pydrive2
     python-dateutil
+    pyyaml # PyYAML
     requests
     rpi_hardware_pwm  # https://pypi.org/project/rpi-hardware-pwm/
+    rpi_lgpio # rpi.lgpio # https://pypi.org/project/rpi-lgpio/
     scapy
     shimmy
     smbus2
