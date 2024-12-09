@@ -1,26 +1,61 @@
-{ lib, fetchFromGitHub, python3Packages }:
+{ lib, fetchFromGitHub, buildPythonApplication, pythonOlder
+# build-system
+, setuptools
+# dependencies
+, pillow # Pillow
+, pyyaml # PyYAML
+, rpi_lgpio # rpi.lgpio # https://pypi.org/project/rpi-lgpio/
+, dbus-python
+, file-read-backwards
+, flask
+, flask-cors
+, flask-wtf
+, gast
+, gpiozero
+, inky  # https://pypi.org/project/inky/
+, pycryptodome
+, pydrive2
+, python-dateutil
+, requests
+, rpi_hardware_pwm  # https://pypi.org/project/rpi-hardware-pwm/
+, scapy
+, shimmy
+, smbus2
+, spidev
+, stable-baselines3 # https://pypi.org/project/stable-baselines3/
+, toml
+, torch
+, torchvision
+, tweepy
+, websockets
+# pythonRuntimeDepsCheck
+, gym
+, rpi-gpio
+# # smbus
+}:
 
-python3Packages.buildPythonApplication rec {
+buildPythonApplication rec {
   pname = "pwnagotchi";
-  version = "2.8.9";
+  version = "2.9.2";
 
-  disabled = python3Packages.pythonOlder "3.10";
+  disabled = pythonOlder "3.11";
 
   # https://github.com/jayofelony/pwnagotchi/blob/master/pyproject.toml
   pyproject = true;
 
   src = fetchFromGitHub { # https://github.com/jayofelony/pwnagotchi/
-    owner = "jayofelony";
+    owner = "nvmd";
     repo = pname;
-    rev = "v${version}";
-    sha256 = "sha256-eNbQSjTx0eO4hUi8eJWIU/U9UBsKLk+yfF0iwhceVsk=";
+    # rev = "v${version}";
+    rev = "ad96cd41aedeeb2f0c4ae9bc586c697430c1e5bc";
+    sha256 = "sha256-aSjiQZvZmPAGNoHoKkc1t5Y82aMnzBC5NJENqHf3oCk=";
   };
 
-  build-system = with python3Packages; [
+  build-system = [
     setuptools
   ];
 
-  dependencies = with python3Packages; [
+  dependencies = [
     pillow # Pillow
     pyyaml # PyYAML
     rpi_lgpio # rpi.lgpio # https://pypi.org/project/rpi-lgpio/
@@ -41,7 +76,7 @@ python3Packages.buildPythonApplication rec {
     shimmy
     smbus2
     spidev
-    stable_baselines3 # https://pypi.org/project/stable-baselines3/
+    stable-baselines3 # https://pypi.org/project/stable-baselines3/
     toml
     torch
     torchvision
@@ -51,6 +86,7 @@ python3Packages.buildPythonApplication rec {
     # pythonRuntimeDepsCheck
     gym
     rpi-gpio
+    # smbus
   ];
 
   meta = with lib; {

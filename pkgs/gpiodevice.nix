@@ -1,12 +1,15 @@
 { lib
-, python3Packages
+, buildPythonPackage
 , pythonOlder
 , fetchPypi
+, hatchling
+, hatch-fancy-pypi-readme
+, libgpiod
 , pytestCheckHook
 , mock
 }:
 
-python3Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "gpiodevice";
   version = "0.0.5";
 
@@ -19,12 +22,12 @@ python3Packages.buildPythonPackage rec {
     hash  = "sha256-zKAf9DGeC6kG/0bcuBE9jVMrP17gPWg9ihEDfI6JFAw=";
   };
 
-  build-system = with python3Packages; [
+  build-system = [
     hatchling
     hatch-fancy-pypi-readme
   ];
 
-  dependencies = with python3Packages; [
+  dependencies = [
     libgpiod  # https://pypi.org/project/gpiod
   ];
 

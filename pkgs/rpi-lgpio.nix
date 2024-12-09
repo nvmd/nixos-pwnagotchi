@@ -1,6 +1,9 @@
-{ lib, python3Packages, pythonOlder, fetchPypi }:
+{ lib, buildPythonPackage, pythonOlder, fetchPypi
+, setuptools
+, lgpio
+}:
 
-python3Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "rpi_lgpio";
   version = "0.6";
 
@@ -13,11 +16,11 @@ python3Packages.buildPythonPackage rec {
     hash  = "sha256-hFebEdVDu4q93cHhD81r3CgZ5Yl75y1pSaKwRNcftz4=";
   };
 
-  build-system = with python3Packages; [
+  build-system = [
     setuptools
   ];
 
-  dependencies = with python3Packages; [
+  dependencies = [
     lgpio # https://pypi.org/project/lgpio
   ];
 

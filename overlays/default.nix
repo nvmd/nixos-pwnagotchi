@@ -1,17 +1,30 @@
 self: super: { # final: prev:
 
   # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/tools/security/bettercap/default.nix#L31
+  # bettercap = super.bettercap.overrideAttrs (old: rec {
+  #   pname = old.pname + "-pwn";
+  #   version = "2.32.4";
+  #   src = super.fetchFromGitHub { # https://github.com/jayofelony/bettercap.git
+  #     owner = "jayofelony";
+  #     repo = old.pname;
+  #     rev = "v${version}";  # or follow `branch: "lite" # or master`?
+  #     sha256 = "sha256-bup6f0VljnqZkYBzDUzN9Xm0OA3b7/+bd383HT6vT7M=";
+  #   };
+
+  #   vendorHash = "sha256-M6tgjYE5xF5uykCVyg7F6xKTvF0hdfJYic+xej98mpM=";
+  # });
+
   bettercap = super.bettercap.overrideAttrs (old: rec {
-    pname = old.pname + "-pwn";
-    version = "2.32.4";
-    src = super.fetchFromGitHub { # https://github.com/jayofelony/bettercap.git
-      owner = "jayofelony";
+    version = "2.40.0";
+    src = super.fetchFromGitHub { # https://github.com/bettercap/bettercap
+      owner = "bettercap";
       repo = old.pname;
-      rev = "v${version}";  # or follow `branch: "lite" # or master`?
-      sha256 = "sha256-bup6f0VljnqZkYBzDUzN9Xm0OA3b7/+bd383HT6vT7M=";
+      fetchSubmodules = true;
+      rev = "v${version}";
+      sha256 = "sha256-w08+KmEJrlnfn14sszHo6essekti4fRc04uI5VnG4Kw=";
     };
 
-    vendorHash = "sha256-M6tgjYE5xF5uykCVyg7F6xKTvF0hdfJYic+xej98mpM=";
+    vendorHash = "sha256-3pPINT1rDvjSXqIX37YW50x650BuKtvwS1ufkXKM/64=";
   });
 
   # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/development/libraries/libpcap/default.nix#L65
@@ -63,15 +76,16 @@ self: super: { # final: prev:
 
   pwngrid = super.callPackage ../pkgs/pwngrid.nix {};
 
-  pwnagotchi = super.callPackage ../pkgs/pwnagotchi.nix {};
+  pwnagotchi = super.python311.pkgs.callPackage ../pkgs/pwnagotchi.nix {};
 
-  python3 = let
-    mypython = super.python3.override {
-      # enableOptimizations = true;
-      # reproducibleBuild = false;
-      self = mypython;
-    };
-  in mypython;
+  # python3Packages = self.python3.pkgs;
+  # python3 = let
+  #   mypython = self.python311.override {
+  #     # enableOptimizations = true;
+  #     # reproducibleBuild = false;
+  #     self = mypython;
+  #   };
+  # in mypython;
 
   pythonPackagesExtensions = super.pythonPackagesExtensions ++ [
     (python-self: python-super: {
@@ -82,7 +96,6 @@ self: super: { # final: prev:
       };
       rpi_lgpio = python-self.callPackage ../pkgs/rpi-lgpio.nix {};
       rpi_hardware_pwm = python-self.callPackage ../pkgs/rpi_hardware_pwm.nix {};
-      stable_baselines3 = python-self.callPackage ../pkgs/stable_baselines3.nix {};
 
       rlcard = python-super.rlcard.overridePythonAttrs (oldAttrs: {
         # https://github.com/datamllab/rlcard/pull/323

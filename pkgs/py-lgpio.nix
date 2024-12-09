@@ -1,11 +1,12 @@
 { lib
-, python3Packages
+, buildPythonPackage
 , fetchPypi
+, setuptools
 , swig
 , pkgsLibgpio
 }:
 
-python3Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "lgpio";
   version = "0.2.2.0";
   pyproject = true;
@@ -15,7 +16,7 @@ python3Packages.buildPythonPackage rec {
     hash  = "sha256-ETcuZTsgD3ags++KI6BzXIXsZ4qfhVC5iTFR7Q+GP/8=";
   };
 
-  build-system = with python3Packages; [
+  build-system = [
     setuptools
   ];
 
