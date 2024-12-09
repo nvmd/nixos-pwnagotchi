@@ -32,16 +32,16 @@
 
 buildGoModule rec {
   pname = "pwngrid";
-  version = "1.11.1";
+  version = "unstable-20240729";
 
   src = fetchFromGitHub { # https://github.com/jayofelony/pwngrid.git
     owner = "jayofelony";
     repo = "pwngrid";
-    rev = "v${version}";
-    hash = "sha256-KoqS+NyZ4u6ynhumoFxXGCflEmxbfVfZtTvESW6PaN8=";
+    rev = "0f2e77c8a748957c65862537b4d2e2d6f46097fa";
+    hash = "sha256-PPMXmYb0h2F97izJTLF3KkGGMdYiNinVhZcRzdjZ8Sg=";
   };
 
-  vendorHash = "sha256-mF9CWKDuyp1a/niRqsNilF5IWd6z4pIMBkt5j87edCo=";
+  vendorHash = "sha256-9M2+LZJ/ztlsNJ9q5bS+5gnmU4HX/zUQKM1VlSPqzGE=";
 
   ldflags = [ "-w -s" ];
 
