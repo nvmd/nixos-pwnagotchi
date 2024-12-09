@@ -1,6 +1,16 @@
-{ lib, python3Packages, pythonOlder, fetchPypi, pytestCheckHook }:
+{ buildPythonPackage, pythonOlder, fetchPypi
+, hatchling
+, hatch-fancy-pypi-readme
+, hatch-requirements-txt
+, numpy
+, pillow
+, smbus2
+, spidev
+, gpiodevice  # >=0.0.3 https://pypi.org/project/gpiodevice/
+, pytestCheckHook
+}:
 
-python3Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "inky";
   version = "2.0.0";
 
@@ -13,18 +23,18 @@ python3Packages.buildPythonPackage rec {
     hash  = "sha256-Yugm/Lc8lXggnHiNz1hXZE894scHQ/+5H3/oaRI+KJU=";
   };
 
-  build-system = with python3Packages; [
+  build-system = [
     hatchling
     hatch-fancy-pypi-readme
     hatch-requirements-txt
   ];
 
-  dependencies = with python3Packages; [
+  dependencies = [
     numpy
     pillow
     smbus2
     spidev
-    gpiodevice  # >=0.0.3 https://pypi.org/project/gpiodevice/
+    gpiodevice
   ];
 
   nativeCheckInputs = [

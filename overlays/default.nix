@@ -63,7 +63,7 @@ self: super: { # final: prev:
 
   pwngrid = super.callPackage ../pkgs/pwngrid.nix {};
 
-  pwnagotchi = super.callPackage ../pkgs/pwnagotchi.nix {};
+  pwnagotchi = super.python311.pkgs.callPackage ../pkgs/pwnagotchi.nix {};
 
   # python3Packages = self.python3.pkgs;
   # python3 = let
