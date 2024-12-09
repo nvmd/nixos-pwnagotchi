@@ -31,25 +31,36 @@
 # pythonRuntimeDepsCheck
 , gym
 , rpi-gpio
-# # smbus
+# , smbus
 }:
 
 buildPythonApplication rec {
   pname = "pwnagotchi";
-  version = "2.9.2";
+  version = "2.9.3";
 
   disabled = pythonOlder "3.11";
 
-  # https://github.com/jayofelony/pwnagotchi/blob/master/pyproject.toml
   pyproject = true;
 
-  src = fetchFromGitHub { # https://github.com/jayofelony/pwnagotchi/
+  src = fetchFromGitHub { # https://github.com/nvmd/pwnagotchi/
     owner = "nvmd";
     repo = pname;
-    # rev = "v${version}";
-    rev = "ad96cd41aedeeb2f0c4ae9bc586c697430c1e5bc";
+    rev = "ad96cd41aedeeb2f0c4ae9bc586c697430c1e5bc"; # yesai
     sha256 = "sha256-aSjiQZvZmPAGNoHoKkc1t5Y82aMnzBC5NJENqHf3oCk=";
   };
+
+  # src = fetchFromGitHub { # https://github.com/jayofelony/pwnagotchi/
+  #   owner = "jayofelony";
+  #   repo = pname;
+  #   rev = "v${version}";  # version = "2.8.9";
+  #   sha256 = "sha256-eNbQSjTx0eO4hUi8eJWIU/U9UBsKLk+yfF0iwhceVsk=";
+  # };
+
+  patchPhase = ''
+    # remove smbus, because smbus2 should be enough
+    substituteInPlace pyproject.toml \
+      --replace "\"smbus\"," " "
+  '';
 
   build-system = [
     setuptools
